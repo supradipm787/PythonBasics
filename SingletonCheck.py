@@ -5,11 +5,14 @@ class Singleton:
     _lock = threading.Lock()
 
     def __new__(cls):
+        try:
             if cls._instance is None:
                 with cls._lock:
                     if cls._instance is None:
                         cls._instance = super(Singleton, cls).__new__(cls)
-            return cls._instance
+        except Exception as e:
+            print(f"Error creating Singleton instance: {e}")                
+        return cls._instance
 
     @staticmethod
     def add (a, b):
